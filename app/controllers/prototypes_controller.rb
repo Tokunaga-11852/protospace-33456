@@ -23,6 +23,9 @@ class PrototypesController < ApplicationController
 
   def edit
     @prototype = Prototype.find(params[:id])
+    unless current_user.id == @prototype.user_id
+      redirect_to action: :index
+    end
   end
   def destroy
     prototype = Prototype.find(params[:id])
@@ -48,11 +51,4 @@ class PrototypesController < ApplicationController
     end
   end
 
-  def move_to_index
-    @prototypes = Prototype.all
-    @prototype = Prototype.find(params[:id])
-    unless current_user.id == @prototype.user_id
-      redirect_to action: :index
-    end
-  end
 end
